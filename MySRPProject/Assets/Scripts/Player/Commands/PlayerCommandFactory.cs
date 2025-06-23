@@ -1,12 +1,14 @@
-namespace Player
+namespace Player.Commands
 {
     public class PlayerCommandFactory
     {
         private readonly PlayerSettings _playerSettings;
+        private readonly PlayerCarrySettings _playerCarrySettings;
 
-        public PlayerCommandFactory(PlayerSettings playerSettings)
+        public PlayerCommandFactory(PlayerSettings playerSettings, PlayerCarrySettings playerCarrySettings)
         {
             _playerSettings =  playerSettings;
+            _playerCarrySettings = playerCarrySettings;
         }
         
         public IPlayerCommand CreatePlayerMoveCommand()
@@ -17,6 +19,11 @@ namespace Player
         public IPlayerCommand CreatePlayerJumpCommand()
         {
             return new PlayerJumpCommand(_playerSettings);
+        }
+        
+        public IPlayerCarryCommand CreatePlayerCarryCommand()
+        {
+            return new PlayerCarryCommand(_playerSettings, _playerCarrySettings);
         }
     }
 }

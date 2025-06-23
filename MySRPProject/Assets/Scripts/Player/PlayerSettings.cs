@@ -1,42 +1,54 @@
 using UnityEngine;
+using Player.Commands;
 
 [System.Serializable]
 public class PlayerSettings
 {
-    // Here are used public fields instead of get/set because Header attribute won't work on properties.
+    // === References ===
     [Header("Objects")]
     [SerializeField] public Transform GroundCheck;
     [SerializeField] public LayerMask GroundLayer;
     [SerializeField] public Rigidbody2D Rb;
-    
+    [SerializeField] public Transform CarryPoint;
+
+    // === Movement & Jumping ===
     [Header("Properties")]
     [SerializeField] public float MoveSpeed = 5f;
     [SerializeField] public float JumpForce = 10f;
     [SerializeField] public float GroundCheckRadius = 0.5f;
     [SerializeField] public float AirControlFactor = 0.016f;
-    
-    [Header("Player states")]
+
+    // === Runtime State ===
+    [Header("Player States")]
     [SerializeField] public bool IsJumping;
     [SerializeField] public bool IsGrounded;
-    
-    public float LastGroundedDirection { get; set; } = 0f;
+
+    public float LastGroundedDirection { get; set; }
     public Vector2 MoveInput { get; set; }
 
     public void ValidateNullable()
     {
         if (!GroundCheck)
-            Debug.LogWarning("Ground check is missing");
-        
+            Debug.LogWarning("GroundCheck is not assigned.");
+
         if (GroundLayer.value == 0)
-            Debug.LogWarning("Ground layer is not selected");
+            Debug.LogWarning("GroundLayer is not set.");
 
         if (!Rb)
-            Debug.LogWarning("RigidBody is null");
+            Debug.LogWarning("Rigidbody2D is not assigned.");
+
+        if (!CarryPoint)
+            Debug.LogWarning("CarryPoint is not assigned.");
     }
 
     public void Setup(PlayerController playerController)
     {
         Rb = playerController.GetComponent<Rigidbody2D>();
-        GroundCheck = FindObjects.FindChildWithTag(playerController.transform, nameof(GroundCheck));
+
+        if (!GroundCheck)
+            GroundCheck = FindObjects.FindChildWithTag(playerController.transform, nameof(GroundCheck));
+        
+        if (!CarryPoint)
+            CarryPoint = FindObjects.FindChildWithTag(playerController.transform, nameof(CarryPoint).Trim());
     }
 }
