@@ -8,6 +8,7 @@ namespace Player
         private static Animator _animator;
         private static bool _isJumping;
         private static bool _isWalking;
+        private static bool _isFalling;
         
         private const string Slash = "Slash";
         private const string Walking = "Walking";
@@ -22,7 +23,7 @@ namespace Player
 
         public static void SetSlash()
         {
-            if (!_isWalking)
+            if (!_isWalking && !_isJumping && !_isFalling)
                 _animator.SetTrigger(Slash);
         }
 
@@ -44,6 +45,7 @@ namespace Player
 
         public static void SetFalling(bool  isFalling)
         {
+            _isFalling =  isFalling;
             _animator.SetBool(Jumping, false);
             _animator.SetBool(Falling, isFalling);
         }
