@@ -1,3 +1,4 @@
+using Player.Enums;
 using UnityEngine;
 
 namespace Player.Commands
@@ -11,6 +12,7 @@ namespace Player.Commands
     {
         public CarryStates CarryState { get; set; }
         GameObject FindNearbyCarriable();
+        void OnDrawGizmosSelected();
     }
 
 }

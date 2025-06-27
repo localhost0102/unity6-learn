@@ -1,5 +1,6 @@
 using UnityEngine;
 using Player.Commands;
+using Player.Enums;
 
 [System.Serializable]
 public class PlayerCarrySettings

@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 using Player.Commands;
 
@@ -5,7 +6,8 @@ using Player.Commands;
 public class PlayerSettings
 {
     // === References ===
-    [Header("Objects")]
+    [Header("Objects")] 
+    [SerializeField] private Animator Animator;
     [SerializeField] public Transform GroundCheck;
     [SerializeField] public LayerMask GroundLayer;
     [SerializeField] public Rigidbody2D Rb;
@@ -14,13 +16,14 @@ public class PlayerSettings
     // === Movement & Jumping ===
     [Header("Properties")]
     [SerializeField] public float MoveSpeed = 5f;
+    [SerializeField] public int FacingDirection = 1; // 1 = right, -1 = left
     [SerializeField] public float JumpForce = 10f;
     [SerializeField] public float GroundCheckRadius = 0.5f;
     [SerializeField] public float AirControlFactor = 0.016f;
 
     // === Runtime State ===
     [Header("Player States")]
-    [SerializeField] public bool IsJumping;
+    [SerializeField] public bool HasJumped;
     [SerializeField] public bool IsGrounded;
 
     public float LastGroundedDirection { get; set; }
@@ -39,6 +42,9 @@ public class PlayerSettings
 
         if (!CarryPoint)
             Debug.LogWarning("CarryPoint is not assigned.");
+        
+        if (!Animator)
+            Debug.LogWarning("Animator is not assigned.");
     }
 
     public void Setup(PlayerController playerController)
@@ -50,5 +56,11 @@ public class PlayerSettings
         
         if (!CarryPoint)
             CarryPoint = FindObjects.FindChildWithTag(playerController.transform, nameof(CarryPoint).Trim());
+
+        if (!Animator)
+        {
+            Animator = playerController.GetComponent<Animator>();
+            AnimationController.Animator = Animator;
+        }
     }
 }

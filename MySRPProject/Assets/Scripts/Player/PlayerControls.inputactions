@@ -9,7 +9,7 @@
                     "name": "Move",
                     "type": "Value",
                     "id": "63228186-7157-4f08-9995-30cae78626ed",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -27,6 +27,15 @@
                     "name": "CarryObject",
                     "type": "Button",
                     "id": "faf8258b-e1e1-4034-a6c5-63b2ff5ab3a0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Slash",
+                    "type": "Button",
+                    "id": "b1d48ad6-b30b-445f-90fc-5abcf448ebd8",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -102,12 +111,23 @@
                 },
                 {
                     "name": "",
-                    "id": "7a8e4976-122f-4690-959b-cfccd64596ef",
-                    "path": "<Keyboard>/q",
+                    "id": "81d4569b-29d9-4b33-92a6-8607a1a9d52e",
+                    "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "CarryObject",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "435da172-9c11-4d09-9d9f-ec5a2944119d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Slash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

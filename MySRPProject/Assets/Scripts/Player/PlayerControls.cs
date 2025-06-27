@@ -95,7 +95,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""Move"",
                     ""type"": ""Value"",
                     ""id"": ""63228186-7157-4f08-9995-30cae78626ed"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
@@ -113,6 +113,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""name"": ""CarryObject"",
                     ""type"": ""Button"",
                     ""id"": ""faf8258b-e1e1-4034-a6c5-63b2ff5ab3a0"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Slash"",
+                    ""type"": ""Button"",
+                    ""id"": ""b1d48ad6-b30b-445f-90fc-5abcf448ebd8"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -188,12 +197,23 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7a8e4976-122f-4690-959b-cfccd64596ef"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""id"": ""81d4569b-29d9-4b33-92a6-8607a1a9d52e"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""CarryObject"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""435da172-9c11-4d09-9d9f-ec5a2944119d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Slash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -207,6 +227,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_CarryObject = m_Gameplay.FindAction("CarryObject", throwIfNotFound: true);
+        m_Gameplay_Slash = m_Gameplay.FindAction("Slash", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -290,6 +311,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_CarryObject;
+    private readonly InputAction m_Gameplay_Slash;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -313,6 +335,10 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/CarryObject".
         /// </summary>
         public InputAction @CarryObject => m_Wrapper.m_Gameplay_CarryObject;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/Slash".
+        /// </summary>
+        public InputAction @Slash => m_Wrapper.m_Gameplay_Slash;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -348,6 +374,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CarryObject.started += instance.OnCarryObject;
             @CarryObject.performed += instance.OnCarryObject;
             @CarryObject.canceled += instance.OnCarryObject;
+            @Slash.started += instance.OnSlash;
+            @Slash.performed += instance.OnSlash;
+            @Slash.canceled += instance.OnSlash;
         }
 
         /// <summary>
@@ -368,6 +397,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @CarryObject.started -= instance.OnCarryObject;
             @CarryObject.performed -= instance.OnCarryObject;
             @CarryObject.canceled -= instance.OnCarryObject;
+            @Slash.started -= instance.OnSlash;
+            @Slash.performed -= instance.OnSlash;
+            @Slash.canceled -= instance.OnSlash;
         }
 
         /// <summary>
@@ -429,5 +461,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCarryObject(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Slash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSlash(InputAction.CallbackContext context);
     }
 }

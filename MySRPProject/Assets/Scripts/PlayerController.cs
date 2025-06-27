@@ -1,41 +1,56 @@
+using Player;
 using Player.Commands;
+using Player.Enums;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerSettings playerSettings;
+    [SerializeField] private PlayerSettings _playerSettings;
     [SerializeField] private PlayerCarrySettings _playerCarrySettings;
+    [SerializeField] private PlayerFightSettings _playerFightSettings;
 
     private PlayerControls _controls;
     private IPlayerCommand _moveCommand;
     private IPlayerCommand _jumpCommand;
+    private IPlayerCommand _fightCommand;
     private IPlayerCarryCommand _carryCommand;
+    
     private const string GroundLayerName = "Ground";
 
     private void Awake()
     {
-        playerSettings.Setup(this);
-        playerSettings.ValidateNullable();
-
+        _playerSettings.Setup(this);
+        _playerSettings.ValidateNullable();
         _playerCarrySettings.Setup(this);
         _playerCarrySettings.ValidateNullable();
 
-        PlayerCommandFactory factory = new PlayerCommandFactory(playerSettings, _playerCarrySettings);
+        PlayerCommandFactory factory = new PlayerCommandFactory(_playerSettings, _playerCarrySettings,  _playerFightSettings);
         _moveCommand = factory.CreatePlayerMoveCommand();
         _jumpCommand = factory.CreatePlayerJumpCommand();
+        _fightCommand =  factory.CreatePlayerFightCommand();
         _carryCommand = factory.CreatePlayerCarryCommand();
+        
+        SetupInputControls();
+    }
 
+    private void SetupInputControls()
+    {
         _controls = new PlayerControls();
-        _controls.Gameplay.Move.performed += ctx => playerSettings.MoveInput = ctx.ReadValue<Vector2>();
-        _controls.Gameplay.Move.canceled += _ => playerSettings.MoveInput = Vector2.zero;
+        // Move
+        _controls.Gameplay.Move.performed += ctx => SetDirection(ctx.ReadValue<Vector2>());
+        _controls.Gameplay.Move.canceled += _ => _playerSettings.MoveInput = Vector2.zero;
+        // Jump
         _controls.Gameplay.Jump.performed += _ =>
         {
-            if (IsGrounded()) playerSettings.IsJumping = true;
+            if (IsGrounded()) _playerSettings.HasJumped = true;
         };
 
+        // Carry
         _controls.Gameplay.CarryObject.performed += _ => _playerCarrySettings.CarryState = CarryStates.Pickup;
         _controls.Gameplay.CarryObject.canceled += _ => _playerCarrySettings.CarryState = CarryStates.Drop;
+        // Fight
+        _controls.Gameplay.Slash.performed += _ => _playerFightSettings.FightState = FightStates.Slash;
+        _controls.Gameplay.Slash.canceled += _ => _playerFightSettings.FightState = FightStates.None;
     }
 
     private void OnEnable()
@@ -50,32 +65,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        playerSettings.IsGrounded = IsGrounded();
+        _playerSettings.IsGrounded = IsGrounded();
         _moveCommand.Execute();
         _jumpCommand.Execute();
+        _fightCommand.Execute();
         CarryObject();
-        FindNearbyCarriable();
-    }
-
-    public GameObject FindNearbyCarriable()
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(_playerCarrySettings.CarryPoint.position, _playerCarrySettings.CarryRadius);
-        foreach (var hit in hits)
-        {
-            if (hit.TryGetComponent<CarriableObject>(out var carriable))
-            {
-                return hit.gameObject;
-            }
-        }
-        return null;
-    }
-    
-    private void OnDrawGizmosSelected()
-    {
-        if (_playerCarrySettings == null || _playerCarrySettings.CarryPoint == null) return;
-Debug.Log("Gizmos");
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(_playerCarrySettings.CarryPoint.position, _playerCarrySettings.CarryRadius);
     }
     
     private void CarryObject()
@@ -87,18 +81,34 @@ Debug.Log("Gizmos");
 
         _carryCommand.Execute();
     }
+    
+    private void SetDirection(Vector2 readValue)
+    {
+        _playerSettings.MoveInput = readValue;
+        
+        if (_playerSettings.MoveInput.x != 0)
+        {
+            _playerSettings.FacingDirection = _playerSettings.MoveInput.x > 0 ? 1 : -1;
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * _playerSettings.FacingDirection, transform.localScale.y, transform.localScale.z);
+        }
+    }
 
+    // private void OnDrawGizmosSelected()
+    // {
+    //     _carryCommand.OnDrawGizmosSelected();
+    // }
+    
     // Used only to initially set IsGrounded property (for testing purposes)
     private void OnCollisionEnter2D(Collision2D other)
     {
         string layerName = LayerMask.LayerToName(other.gameObject.layer);
         if (layerName == GroundLayerName)
-            playerSettings.IsGrounded = true;
+            _playerSettings.IsGrounded = true;
     }
 
     private bool IsGrounded()
     {
-        playerSettings.IsGrounded = Physics2D.OverlapCircle(playerSettings.GroundCheck.position, playerSettings.GroundCheckRadius, playerSettings.GroundLayer);
-        return playerSettings.IsGrounded;
+        _playerSettings.IsGrounded = Physics2D.OverlapCircle(_playerSettings.GroundCheck.position, _playerSettings.GroundCheckRadius, _playerSettings.GroundLayer);
+        return _playerSettings.IsGrounded;
     }
 }
