@@ -126,6 +126,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""CameraScrollZoom"",
+                    ""type"": ""Value"",
+                    ""id"": ""aa3812e1-9a6c-4c9c-80dd-6fbb2aa7f258"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""CameraKeyZoom"",
+                    ""type"": ""Button"",
+                    ""id"": ""8e1f9eda-4276-4943-9cc3-86c5dad31ede"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -216,6 +234,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Slash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f189bb0d-7e2d-454c-9f08-ead9b33a9e3e"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraScrollZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fed9a8c-242e-49f6-9f86-2f68695a4f4c"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraKeyZoom"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -228,6 +268,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Gameplay_Jump = m_Gameplay.FindAction("Jump", throwIfNotFound: true);
         m_Gameplay_CarryObject = m_Gameplay.FindAction("CarryObject", throwIfNotFound: true);
         m_Gameplay_Slash = m_Gameplay.FindAction("Slash", throwIfNotFound: true);
+        m_Gameplay_CameraScrollZoom = m_Gameplay.FindAction("CameraScrollZoom", throwIfNotFound: true);
+        m_Gameplay_CameraKeyZoom = m_Gameplay.FindAction("CameraKeyZoom", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -312,6 +354,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Jump;
     private readonly InputAction m_Gameplay_CarryObject;
     private readonly InputAction m_Gameplay_Slash;
+    private readonly InputAction m_Gameplay_CameraScrollZoom;
+    private readonly InputAction m_Gameplay_CameraKeyZoom;
     /// <summary>
     /// Provides access to input actions defined in input action map "Gameplay".
     /// </summary>
@@ -339,6 +383,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Gameplay/Slash".
         /// </summary>
         public InputAction @Slash => m_Wrapper.m_Gameplay_Slash;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/CameraScrollZoom".
+        /// </summary>
+        public InputAction @CameraScrollZoom => m_Wrapper.m_Gameplay_CameraScrollZoom;
+        /// <summary>
+        /// Provides access to the underlying input action "Gameplay/CameraKeyZoom".
+        /// </summary>
+        public InputAction @CameraKeyZoom => m_Wrapper.m_Gameplay_CameraKeyZoom;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -377,6 +429,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Slash.started += instance.OnSlash;
             @Slash.performed += instance.OnSlash;
             @Slash.canceled += instance.OnSlash;
+            @CameraScrollZoom.started += instance.OnCameraScrollZoom;
+            @CameraScrollZoom.performed += instance.OnCameraScrollZoom;
+            @CameraScrollZoom.canceled += instance.OnCameraScrollZoom;
+            @CameraKeyZoom.started += instance.OnCameraKeyZoom;
+            @CameraKeyZoom.performed += instance.OnCameraKeyZoom;
+            @CameraKeyZoom.canceled += instance.OnCameraKeyZoom;
         }
 
         /// <summary>
@@ -400,6 +458,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Slash.started -= instance.OnSlash;
             @Slash.performed -= instance.OnSlash;
             @Slash.canceled -= instance.OnSlash;
+            @CameraScrollZoom.started -= instance.OnCameraScrollZoom;
+            @CameraScrollZoom.performed -= instance.OnCameraScrollZoom;
+            @CameraScrollZoom.canceled -= instance.OnCameraScrollZoom;
+            @CameraKeyZoom.started -= instance.OnCameraKeyZoom;
+            @CameraKeyZoom.performed -= instance.OnCameraKeyZoom;
+            @CameraKeyZoom.canceled -= instance.OnCameraKeyZoom;
         }
 
         /// <summary>
@@ -468,5 +532,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSlash(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraScrollZoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraScrollZoom(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "CameraKeyZoom" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCameraKeyZoom(InputAction.CallbackContext context);
     }
 }

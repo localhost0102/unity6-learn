@@ -12,6 +12,10 @@ namespace Player.Commands
     {
         public CarryStates CarryState { get; set; }
         GameObject FindNearbyCarriable();
+    }
+
+    public interface IPlayerExtendedCommand
+    {
         void OnDrawGizmosSelected();
     }
 

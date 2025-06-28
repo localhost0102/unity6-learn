@@ -93,10 +93,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // private void OnDrawGizmosSelected()
-    // {
-    //     _carryCommand.OnDrawGizmosSelected();
-    // }
+    private void OnDrawGizmosSelected()
+    {
+        //_carryCommand.OnDrawGizmosSelected();
+    }
     
     // Used only to initially set IsGrounded property (for testing purposes)
     private void OnCollisionEnter2D(Collision2D other)

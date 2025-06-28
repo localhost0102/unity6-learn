@@ -32,6 +32,9 @@ namespace Player
             if (_isJumping)
                 speed = 0f;
             
+            if (_isFalling)
+                return;
+            
             float movingSpeed = Mathf.Abs(speed);
             _isWalking = movingSpeed > 0f;
             _animator.SetFloat(Walking, movingSpeed);
@@ -45,6 +48,8 @@ namespace Player
 
         public static void SetFalling(bool  isFalling)
         {
+            if (_isFalling == isFalling) return;
+            
             _isFalling =  isFalling;
             _animator.SetBool(Jumping, false);
             _animator.SetBool(Falling, isFalling);
