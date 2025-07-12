@@ -15,9 +15,9 @@ TagManager:
   - UI
   - Ground
   - Player
-  - 
-  - 
-  - 
+  - WorldObjects
+  - Background
+  - Background_stars
   - 
   - 
   - 
@@ -42,6 +42,30 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 3835554809
+    locked: 0
+  - name: 01 Distance
+    uniqueID: 3030594543
+    locked: 0
+  - name: 03 Mid
+    uniqueID: 203438799
+    locked: 0
+  - name: Player
+    uniqueID: 1387022051
+    locked: 0
+  - name: 04 Mid 2
+    uniqueID: 3375264765
+    locked: 0
+  - name: 05 Mid 3
+    uniqueID: 2761340737
+    locked: 0
+  - name: 06 Front 1
+    uniqueID: 1082723047
+    locked: 0
+  - name: 07 Front 2
+    uniqueID: 3992283063
     locked: 0
   m_RenderingLayers:
   - Default
