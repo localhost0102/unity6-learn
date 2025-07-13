@@ -1,0 +1,56 @@
+{
+    "name": "GlobalLightInput",
+    "maps": [
+        {
+            "name": "LightControllingInput",
+            "id": "bb112854-aa35-4b3e-a3f9-85b600e7b85d",
+            "actions": [
+                {
+                    "name": "Light Increase Decrease",
+                    "type": "Value",
+                    "id": "931aa99f-ca5d-4c6f-9a91-173d19e72eac",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "1D Axis",
+                    "id": "47de0c9d-8ff6-4a17-ab64-e098b8d28c08",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Light Increase Decrease",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "4680c5a1-e40b-44c2-a70c-cd72a9ecb092",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Light Increase Decrease",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "efdc3e3e-db51-4d1f-9166-810350c2277e",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Light Increase Decrease",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

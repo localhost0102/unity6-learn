@@ -1833,7 +1833,7 @@ Transform:
   m_GameObject: {fileID: 553991731}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 3.23, y: -0.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1854,9 +1854,9 @@ MonoBehaviour:
   m_ComponentVersion: 2
   m_LightType: 1
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
+  m_FalloffIntensity: 0.559
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1.93
+  m_Intensity: 0.8
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000cf3a200ce346ac52fd732ec941b796a4e70a8940b767f5ed
@@ -1875,8 +1875,8 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: 4.0587, y: -1.1474001, z: 0}
-    m_Extent: {x: 4.4823003, y: 2.9644, z: 0}
+    m_Center: {x: 8.692, y: -2.7495, z: 0}
+    m_Extent: {x: 14.1748, y: 9.3609, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
   m_PointLightInnerRadius: 0
@@ -1884,20 +1884,20 @@ MonoBehaviour:
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 1.88
+  m_ShapeLightFalloffSize: 6.94
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
   - {x: 1.6306803, y: -0.42837477, z: 3.253573e-10}
   - {x: 1.4556086, y: -0.5112216, z: 3.253573e-10}
   - {x: 2.0924149, y: -0.53022337, z: -0.0000002659374}
-  - {x: 6.0770836, y: -2.232271, z: 3.253573e-10}
-  - {x: 6.0524817, y: -1.9498006, z: -0.0000002659374}
-  - {x: 6.0869164, y: -1.6887882, z: 0.000000039727468}
-  - {x: 6.1150985, y: -1.3788152, z: -0.0000002659374}
-  - {x: 6.19988, y: -0.9714101, z: -0.0000002659374}
-  - {x: 6.3497, y: -0.61616606, z: -0.0000002659374}
-  - {x: 6.4802523, y: -0.33498168, z: -0.0000002659374}
-  - {x: 6.661472, y: -0.06197731, z: 3.253573e-10}
+  - {x: 14.662988, y: -5.171517, z: 3.253573e-10}
+  - {x: 14.408729, y: -4.491206, z: -0.0000002659374}
+  - {x: 14.33, y: -3.7839108, z: 0.000000039727468}
+  - {x: 14.3358965, y: -3.1190174, z: -0.0000002659374}
+  - {x: 14.515094, y: -2.4974859, z: -0.0000002659374}
+  - {x: 14.93126, y: -1.9203281, z: -0.0000002659374}
+  - {x: 15.3660145, y: -1.4178245, z: -0.0000002659374}
+  - {x: 15.927779, y: -0.84252864, z: 3.253573e-10}
   - {x: 2.8787112, y: -0.32826364, z: -0.0000002659374}
 --- !u!1 &559352816
 GameObject:
@@ -2078,6 +2078,7 @@ GameObject:
   m_Component:
   - component: {fileID: 619394802}
   - component: {fileID: 619394801}
+  - component: {fileID: 619394803}
   m_Layer: 0
   m_Name: Global Light 2D
   m_TagString: Untagged
@@ -2102,7 +2103,7 @@ MonoBehaviour:
   m_BlendStyleIndex: 0
   m_FalloffIntensity: 0.5
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.005
   m_LightVolumeIntensity: 1
   m_LightVolumeEnabled: 0
   m_ApplyToSortingLayers: 00000000f9eb9de4ef33a3b4cf3a200cfd732ec941b796a4e70a8940b767f5ede346ac52
@@ -2152,6 +2153,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2029636185}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &619394803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 619394800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 913cc900a73befa8fadeeff77db3aa45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensityStep: 0.2
+  minIntensity: 0
+  maxIntensity: 1
 --- !u!1 &697006500
 GameObject:
   m_ObjectHideFlags: 0
@@ -2766,6 +2782,8 @@ GameObject:
   - component: {fileID: 812061252}
   - component: {fileID: 812061251}
   - component: {fileID: 812061255}
+  - component: {fileID: 812061256}
+  - component: {fileID: 812061257}
   m_Layer: 3
   m_Name: CarriableBox2
   m_TagString: GroundCheck
@@ -2804,7 +2822,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
@@ -2910,7 +2928,7 @@ Transform:
   m_GameObject: {fileID: 812061249}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.75, y: -2.07, z: 0}
+  m_LocalPosition: {x: 5.75, y: -2.498, z: 0}
   m_LocalScale: {x: 0.6011, y: 0.6581, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2929,6 +2947,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a945c24567dbc373899782423080667, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!251 &812061256
+PlatformEffector2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812061249}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1
+--- !u!61 &812061257
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812061249}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &821331274
 GameObject:
   m_ObjectHideFlags: 0
