@@ -17,4 +17,19 @@ public static class FindObjects
 
         return null;
     }
+    
+    public static Transform FindChildByName(Transform parent, string childName)
+    {
+        foreach (Transform child in parent)
+        {
+            if (child.name == childName)
+                return child;
+
+            Transform result = FindChildByName(child, childName);
+            if (result != null)
+                return result;
+        }
+        return null;
+    }
+
 }

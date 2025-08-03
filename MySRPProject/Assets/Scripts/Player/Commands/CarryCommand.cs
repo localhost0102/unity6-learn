@@ -30,7 +30,6 @@ namespace Player.Commands
                     DropObject();
                     break;
                 case CarryStates.Carrying:
-                    Debug.Log("Carrying");
                     break;
                 default:
                     _playerCarrySettings.CarryState = CarryStates.None;
