@@ -52,11 +52,11 @@ TagManager:
   - name: 03 Mid
     uniqueID: 203438799
     locked: 0
-  - name: Player
-    uniqueID: 1387022051
-    locked: 0
   - name: 04 Mid 2
     uniqueID: 3375264765
+    locked: 0
+  - name: Player
+    uniqueID: 1387022051
     locked: 0
   - name: 05 Mid 3
     uniqueID: 2761340737

@@ -25,7 +25,7 @@ namespace Player
 
         public static void SetSlash()
         {
-            if (!_isWalking && !_isJumping && !_isFalling)
+            if (!_isJumping && !_isFalling)
                 _animator.SetTrigger(Slash);
         }
 

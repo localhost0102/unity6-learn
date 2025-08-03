@@ -23,7 +23,6 @@ namespace Player.Commands
             }
             else if (_playerSettings.IsGrounded)
             {
-                Debug.Log(_playerSettings.IsGrounded);
                 velocity = GroundMovement(velocity,  _playerSettings.MoveInput.x);
                 AnimationController.SetWalking(velocity.x);
             }
