@@ -1,9 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Player.Commands
 {
     public class JumpCommand : IPlayerCommand
     {
+        public static readonly UnityEvent JumpEvent = new UnityEvent();
+        public static readonly UnityEvent LandingEvent = new UnityEvent();
+        
         private readonly PlayerSettings _playerSettings;
         private float _previousVelocityY = 0f;
         
@@ -23,6 +27,7 @@ namespace Player.Commands
             
             if (_playerSettings.HasJumped)
             {
+                JumpEvent?.Invoke();
                 AnimationController.SetJumping(true);
                 Vector2 velocity = _playerSettings.Rb.linearVelocity;
                 velocity.y = _playerSettings.JumpForce;
@@ -30,7 +35,18 @@ namespace Player.Commands
                 _playerSettings.HasJumped = false;
             }
 
+            InvokeHasLandedEvent();
             SetPreviousVelocity(_playerSettings.Rb.linearVelocity.y);
+        }
+
+        private void InvokeHasLandedEvent()
+        {
+            float currentVelocityY = _playerSettings.Rb.linearVelocity.y;
+            
+            if (_previousVelocityY < 0 && currentVelocityY > _previousVelocityY && _playerSettings.IsGrounded)
+            {
+                LandingEvent?.Invoke();
+            }
         }
 
         private void SetPreviousVelocity(float linearVelocityY)
