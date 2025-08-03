@@ -18,12 +18,12 @@ namespace Player.Commands
             
             if (_playerSettings.IsBlockedAhead)
             {
-                //_playerSettings.MoveInput = new Vector2(Vector2.zero.x, _playerSettings.MoveInput.y);
                 velocity = GroundMovement(velocity, 0);
                 AnimationController.SetWalking(velocity.x);
             }
             else if (_playerSettings.IsGrounded)
             {
+                Debug.Log(_playerSettings.IsGrounded);
                 velocity = GroundMovement(velocity,  _playerSettings.MoveInput.x);
                 AnimationController.SetWalking(velocity.x);
             }
@@ -41,16 +41,17 @@ namespace Player.Commands
             // Full control
             velocity.x = moveInput * _playerSettings.MoveSpeed;
 
+            // Nemam pojma sto je ovo bilo, ali mislim da moze van tu i property
             // Remember last move input direction while grounded
-            if (Mathf.Abs(moveInput) > 0.1f)
-            {
-                _playerSettings.LastGroundedDirection = moveInput;
-            }
-            else
-            {
-                // Reset momentum direction when grounded and idle
-                _playerSettings.LastGroundedDirection = 0f;
-            }
+            // if (Mathf.Abs(moveInput) > 0.1f)
+            // {
+            //     _playerSettings.LastGroundedDirection = moveInput;
+            // }
+            // else
+            // {
+            //     // Reset momentum direction when grounded and idle
+            //     _playerSettings.LastGroundedDirection = 0f;
+            // }
 
             return velocity;
         }

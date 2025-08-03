@@ -31,10 +31,7 @@ namespace Player
 
         public static void SetWalking(float speed)
         {
-            if (_isFalling)
-                return;
-            
-            if (_isJumping)
+            if (_isFalling || _isJumping)
             {
                 ForceStopWalking();
                 return;
@@ -45,7 +42,7 @@ namespace Player
 
             if (_isWalking)
             {
-                _animator.SetFloat(Walking, speed);
+                 _animator.SetFloat(Walking, speed);
             }
             else if (_previousSpeed > speed && !_isWalking)
             {

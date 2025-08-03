@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        IsGroundedRaycast();
+        _playerSettings.IsGrounded = IsGroundedRaycast();
         _playerSettings.IsBlockedAhead =
             IsBlockedAhead(new Vector2(_playerSettings.FacingDirection, 0), _playerSettings.ForwardCheckRaycastBottom.position) ||
             IsBlockedAhead(new Vector2(_playerSettings.FacingDirection, 0), _playerSettings.ForwardCheckRaycast.position);
@@ -74,8 +74,8 @@ public class PlayerController : MonoBehaviour
 
         //SetIsGroundedOldWay();
 
-        _moveCommand.Execute();
         _jumpCommand.Execute();
+        _moveCommand.Execute();
         _fightCommand.Execute();
         CarryObject();
     }
@@ -88,11 +88,9 @@ public class PlayerController : MonoBehaviour
             CheckIsGroundedRaycast(_playerSettings.GroundCheckMidRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer, debug: true);
     }
 
-    private bool CheckIsGroundedRaycast(Vector3 groundcheckRaycastPosition, float lengthToCheck,
-        LayerMask layersToCheck, bool debug = false)
+    private bool CheckIsGroundedRaycast(Vector3 groundcheckRaycastPosition, float lengthToCheck, LayerMask layersToCheck, bool debug = false)
     {
-        RaycastHit2D raycastHit =
-            Physics2D.Raycast(groundcheckRaycastPosition, Vector2.down, lengthToCheck, layersToCheck);
+        RaycastHit2D raycastHit = Physics2D.Raycast(groundcheckRaycastPosition, Vector2.down, lengthToCheck, layersToCheck);
         bool hasHit = raycastHit.collider != null;
 
         if (debug)
@@ -100,8 +98,9 @@ public class PlayerController : MonoBehaviour
 
         if (hasHit)
         {
-            _playerSettings.IsGrounded = true;
-            return _playerSettings.IsGrounded;
+            // _playerSettings.IsGrounded = true;
+            // return _playerSettings.IsGrounded;
+            return true;
         }
 
         return false;

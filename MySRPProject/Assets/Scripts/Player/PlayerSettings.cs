@@ -34,7 +34,7 @@ public class PlayerSettings
     [SerializeField] public bool HasJumped;
     [SerializeField] public bool IsGrounded;
 
-    public float LastGroundedDirection { get; set; }
+    //public float LastGroundedDirection { get; set; }
     public Vector2 MoveInput { get; set; }
     public bool IsBlockedAhead { get; set; }
 
