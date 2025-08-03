@@ -22,7 +22,7 @@ public class GlobalLightController : MonoBehaviour
         globalLight = GetComponent<Light2D>();
         globalLightOriginalIntensity = globalLight.intensity;
 
-        var allLights = FindObjectsOfType<Light2D>();
+        var allLights = FindObjectsByType<Light2D>(FindObjectsSortMode.None);
         otherLights = allLights.Where(x => x != globalLight).ToArray();
 
         // Cache their original intensities

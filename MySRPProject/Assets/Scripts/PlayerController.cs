@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private IPlayerCommand _jumpCommand;
     private IPlayerCommand _fightCommand;
     private IPlayerCarryCommand _carryCommand;
-    
+
     private const string GroundLayerName = "Ground";
 
     private void Awake()
@@ -24,12 +24,12 @@ public class PlayerController : MonoBehaviour
         _playerCarrySettings.Setup(this);
         _playerCarrySettings.ValidateNullable();
 
-        PlayerCommandFactory factory = new PlayerCommandFactory(_playerSettings, _playerCarrySettings,  _playerFightSettings);
+        PlayerCommandFactory factory = new PlayerCommandFactory(_playerSettings, _playerCarrySettings, _playerFightSettings);
         _moveCommand = factory.CreatePlayerMoveCommand();
         _jumpCommand = factory.CreatePlayerJumpCommand();
-        _fightCommand =  factory.CreatePlayerFightCommand();
+        _fightCommand = factory.CreatePlayerFightCommand();
         _carryCommand = factory.CreatePlayerCarryCommand();
-        
+
         SetupInputControls();
     }
 
@@ -37,12 +37,13 @@ public class PlayerController : MonoBehaviour
     {
         _controls = new PlayerControls();
         // Move
-        _controls.Gameplay.Move.performed += ctx => SetDirection(ctx.ReadValue<Vector2>());
+        _controls.Gameplay.Move.performed += ctx => SetMoveDirection(ctx.ReadValue<Vector2>());
         _controls.Gameplay.Move.canceled += _ => _playerSettings.MoveInput = Vector2.zero;
         // Jump
         _controls.Gameplay.Jump.performed += _ =>
         {
-            if (IsGrounded()) _playerSettings.HasJumped = true;
+            //if (SetIsGroundedOldWay()) _playerSettings.HasJumped = true;
+            if (IsGroundedRaycast()) _playerSettings.HasJumped = true;
         };
 
         // Carry
@@ -65,13 +66,67 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _playerSettings.IsGrounded = IsGrounded();
+        IsGroundedRaycast();
+        _playerSettings.IsBlockedAhead =
+            IsBlockedAhead(new Vector2(_playerSettings.FacingDirection, 0), _playerSettings.ForwardCheckRaycastBottom.position) ||
+            IsBlockedAhead(new Vector2(_playerSettings.FacingDirection, 0), _playerSettings.ForwardCheckRaycast.position);
+
+
+        //SetIsGroundedOldWay();
+
         _moveCommand.Execute();
         _jumpCommand.Execute();
         _fightCommand.Execute();
         CarryObject();
     }
-    
+
+    private bool IsGroundedRaycast()
+    {
+        return
+            CheckIsGroundedRaycast(_playerSettings.GroundCheckFrontRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer, debug: true) ||
+            CheckIsGroundedRaycast(_playerSettings.GroundCheckBackRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer, debug: true) ||
+            CheckIsGroundedRaycast(_playerSettings.GroundCheckMidRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer, debug: true);
+    }
+
+    private bool CheckIsGroundedRaycast(Vector3 groundcheckRaycastPosition, float lengthToCheck,
+        LayerMask layersToCheck, bool debug = false)
+    {
+        RaycastHit2D raycastHit =
+            Physics2D.Raycast(groundcheckRaycastPosition, Vector2.down, lengthToCheck, layersToCheck);
+        bool hasHit = raycastHit.collider != null;
+
+        if (debug)
+            Debug.DrawRay(groundcheckRaycastPosition, Vector2.down * lengthToCheck, hasHit ? Color.green : Color.red);
+
+        if (hasHit)
+        {
+            _playerSettings.IsGrounded = true;
+            return _playerSettings.IsGrounded;
+        }
+
+        return false;
+    }
+
+    private bool IsBlockedAhead(Vector2 direction, Vector2 origin)
+    {
+        //Vector2 origin = _playerSettings.ForwardCheckRaycast.position;
+        float distance = _playerSettings.ForwardCheckDistanceRaycast;
+        int layer = _playerSettings.BlockingLayer;
+
+        RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance, layer);
+
+        // Force cast to Vector3 for draw
+        Debug.DrawRay(origin, (Vector3)(direction * distance), hit.collider != null ? Color.green : Color.red);
+
+        return hit.collider != null && !IsMovable(hit.collider.gameObject);
+    }
+
+    private bool IsMovable(GameObject obj)
+    {
+        //return obj.CompareTag("Movable");
+        return false;
+    }
+
     private void CarryObject()
     {
         if (_playerCarrySettings.CarryState == CarryStates.Pickup)
@@ -81,15 +136,16 @@ public class PlayerController : MonoBehaviour
 
         _carryCommand.Execute();
     }
-    
-    private void SetDirection(Vector2 readValue)
+
+    private void SetMoveDirection(Vector2 readValue)
     {
         _playerSettings.MoveInput = readValue;
-        
+
         if (_playerSettings.MoveInput.x != 0)
         {
             _playerSettings.FacingDirection = _playerSettings.MoveInput.x > 0 ? 1 : -1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * _playerSettings.FacingDirection, transform.localScale.y, transform.localScale.z);
+            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * _playerSettings.FacingDirection,
+                transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -97,7 +153,7 @@ public class PlayerController : MonoBehaviour
     {
         //_carryCommand.OnDrawGizmosSelected();
     }
-    
+
     // Used only to initially set IsGrounded property (for testing purposes)
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -106,7 +162,7 @@ public class PlayerController : MonoBehaviour
             _playerSettings.IsGrounded = true;
     }
 
-    private bool IsGrounded()
+    private bool SetIsGroundedOldWay()
     {
         _playerSettings.IsGrounded = Physics2D.OverlapCircle(_playerSettings.GroundCheck.position, _playerSettings.GroundCheckRadius, _playerSettings.GroundLayer);
         return _playerSettings.IsGrounded;

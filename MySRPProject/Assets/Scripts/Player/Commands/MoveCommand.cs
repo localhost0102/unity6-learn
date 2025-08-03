@@ -16,9 +16,15 @@ namespace Player.Commands
         {
             Vector2 velocity = _playerSettings.Rb.linearVelocity;
             
-            if (_playerSettings.IsGrounded)
+            if (_playerSettings.IsBlockedAhead)
             {
-                velocity = GroundMovement(velocity);
+                //_playerSettings.MoveInput = new Vector2(Vector2.zero.x, _playerSettings.MoveInput.y);
+                velocity = GroundMovement(velocity, 0);
+                AnimationController.SetWalking(velocity.x);
+            }
+            else if (_playerSettings.IsGrounded)
+            {
+                velocity = GroundMovement(velocity,  _playerSettings.MoveInput.x);
                 AnimationController.SetWalking(velocity.x);
             }
             else
@@ -30,15 +36,15 @@ namespace Player.Commands
             _playerSettings.Rb.linearVelocity = velocity;
         }
 
-        private Vector2 GroundMovement(Vector2 velocity)
+        private Vector2 GroundMovement(Vector2 velocity, float moveInput)
         {
             // Full control
-            velocity.x = _playerSettings.MoveInput.x * _playerSettings.MoveSpeed;
+            velocity.x = moveInput * _playerSettings.MoveSpeed;
 
             // Remember last move input direction while grounded
-            if (Mathf.Abs(_playerSettings.MoveInput.x) > 0.1f)
+            if (Mathf.Abs(moveInput) > 0.1f)
             {
-                _playerSettings.LastGroundedDirection = _playerSettings.MoveInput.x;
+                _playerSettings.LastGroundedDirection = moveInput;
             }
             else
             {

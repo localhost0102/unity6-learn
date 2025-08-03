@@ -41,7 +41,8 @@ namespace Player.Commands
         private void SetFalling(float currentVelocityY)
         {
             //currentVelocityY < previousVelocityY && _previousVelocityY >= 0
-            if (currentVelocityY < 0f)
+            float roundedVelocityY = Mathf.Round(currentVelocityY * 100) / 100f;
+            if (roundedVelocityY < -0.1f)
             {
                 AnimationController.SetFalling(true);
             }
