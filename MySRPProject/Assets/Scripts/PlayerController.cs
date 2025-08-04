@@ -1,6 +1,7 @@
 using Player;
 using Player.Commands;
 using Player.Enums;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -12,7 +13,7 @@ public class PlayerController : MonoBehaviour
     private PlayerControls _controls;
     private IPlayerCommand _moveCommand;
     private IPlayerCommand _jumpCommand;
-    private IPlayerCommand _fightCommand;
+    private IPlayerWithEventsCommand _fightCommand;
     private IPlayerCarryCommand _carryCommand;
 
     private const string GroundLayerName = "Ground";
@@ -31,7 +32,16 @@ public class PlayerController : MonoBehaviour
         _carryCommand = factory.CreatePlayerCarryCommand();
 
         SetupInputControls();
+        SetupChildren();
     }
+
+    private void SetupChildren()
+    {
+        Transform swordObject = FindObjects.FindChildByName(transform,"Sword");
+        OnSwordCollision swordCollision = swordObject.GetComponent<OnSwordCollision>();
+        swordCollision.SetPlayerSettings(_playerFightSettings);
+    }
+       
 
     private void SetupInputControls()
     {
@@ -57,11 +67,13 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         _controls.Gameplay.Enable();
+        PlayerAnimationEvents.SlashEvent.AddListener(_fightCommand.ActionEvent);
     }
 
     private void OnDisable()
     {
         _controls.Gameplay.Disable();
+        PlayerAnimationEvents.SlashEvent.RemoveListener(_fightCommand.ActionEvent);
     }
 
     private void FixedUpdate()
@@ -70,7 +82,6 @@ public class PlayerController : MonoBehaviour
         _playerSettings.IsBlockedAhead =
             IsBlockedAhead(new Vector2(_playerSettings.FacingDirection, 0), _playerSettings.ForwardCheckRaycastBottom.position) ||
             IsBlockedAhead(new Vector2(_playerSettings.FacingDirection, 0), _playerSettings.ForwardCheckRaycast.position);
-
 
         //SetIsGroundedOldWay();
 

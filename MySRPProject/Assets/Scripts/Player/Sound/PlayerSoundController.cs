@@ -1,10 +1,15 @@
+using System;
 using Player.Commands;
 using Unity.Properties;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class PlayerSoundController : MonoBehaviour
 {
     // AudioSource je stavljen na child u slucaju da zelimo vise sourceva. Drugi bismo dodali na novi child objekt
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioClip level1Music;
+    
     [SerializeField] private AudioSource sfxSource;
     [SerializeField] private AudioClip footstepSound1;
     [SerializeField] private AudioClip footstepSound2;
@@ -30,6 +35,12 @@ public class PlayerSoundController : MonoBehaviour
         JumpCommand.JumpEvent.RemoveListener(PlayJumpSound);
         JumpCommand.LandingEvent.RemoveListener(PlayLandedSound);
         FightCommand.AttackEvent.RemoveListener(PlayAttackSound);
+    }
+
+    private void Awake()
+    {
+        musicSource.clip = level1Music;
+        musicSource.Play();
     }
 
     private void PlayFootstepSound(string soundOrdinal)

@@ -1,10 +1,12 @@
 using Player;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerAnimationEvents : MonoBehaviour
 {
     public static readonly UnityEvent<string> FootstepEvent = new UnityEvent<string>();
+    public static readonly UnityEvent<bool> SlashEvent = new UnityEvent<bool>();
     
     public void OnWalkingAnimationEnded(int step)
     {
@@ -25,4 +27,11 @@ public class PlayerAnimationEvents : MonoBehaviour
             FootstepEvent?.Invoke("2");
         }
     }
+    
+    private void OnSlashAnimationStarted(int slashPosition)
+    {
+        bool hasStarted = slashPosition == 1;
+        SlashEvent?.Invoke(hasStarted);
+    }
+
 }
