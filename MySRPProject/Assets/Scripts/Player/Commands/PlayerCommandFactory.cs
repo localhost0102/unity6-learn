@@ -28,7 +28,7 @@ namespace Player.Commands
             return new CarryCommand(_playerSettings, _playerCarrySettings);
         }
         
-        public IPlayerCommand CreatePlayerFightCommand()
+        public IPlayerWithEventsCommand CreatePlayerFightCommand()
         {
             return new FightCommand(_playerSettings, _playerFightSettings);
         }

@@ -14,6 +14,11 @@ namespace Player.Commands
         GameObject FindNearbyCarriable();
     }
 
+    public interface IPlayerWithEventsCommand : IPlayerCommand
+    {
+        public void ActionEvent<T>(T parameter);
+    }
+
     public interface IPlayerExtendedCommand
     {
         void OnDrawGizmosSelected();
