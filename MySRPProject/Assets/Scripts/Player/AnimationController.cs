@@ -5,6 +5,7 @@ namespace Player
 {
     public class AnimationController
     {
+        private static bool _isFightingAndWalking;
         private static float _previousSpeed;
         private static bool _stopWalkingOnAnimationEnd;
         private static Animator _animator;
@@ -13,6 +14,7 @@ namespace Player
         private static bool _isFalling;
 
         private const string Slash = "Slash";
+        private const string IsFighting = "IsFighting"; // Same as slash, but also walks
         private const string Walking = "Walking";
         private const string Jumping = "Jumping";
         private const string Falling = "Falling";
@@ -23,12 +25,24 @@ namespace Player
             set => _animator ??= value;
         }
 
-        public static void SetSlash()
+        public static void StartAttack()
         {
-            if (!_isJumping && !_isFalling)
+            if (!_isJumping && !_isFalling && !_isWalking)
+            {
                 _animator.SetTrigger(Slash);
+            }
+            else if (!_isJumping && !_isFalling && _isWalking)
+            {
+                _animator.SetTrigger(IsFighting);
+                _isFightingAndWalking = true;
+            }
         }
 
+        public static void EndAttack()
+        {
+            _isFightingAndWalking = false;
+        }
+        
         public static void SetWalking(float speed)
         {
             if (_isFalling || _isJumping)
@@ -82,5 +96,7 @@ namespace Player
             _animator.SetBool(Jumping, false);
             _animator.SetBool(Falling, isFalling);
         }
+
+        
     }
 }

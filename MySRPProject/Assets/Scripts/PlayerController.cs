@@ -9,7 +9,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PlayerSettings _playerSettings;
     [SerializeField] private PlayerCarrySettings _playerCarrySettings;
     [SerializeField] private PlayerFightSettings _playerFightSettings;
-
+    [SerializeField] private bool _debug;
+    
     private PlayerControls _controls;
     private IPlayerCommand _moveCommand;
     private IPlayerCommand _jumpCommand;
@@ -67,13 +68,13 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         _controls.Gameplay.Enable();
-        PlayerAnimationEvents.SlashEvent.AddListener(_fightCommand.ActionEvent);
+        PlayerAnimationEvents.SlashEvent.AddListener(_fightCommand.SetSwordColliderAsTrigger);
     }
 
     private void OnDisable()
     {
         _controls.Gameplay.Disable();
-        PlayerAnimationEvents.SlashEvent.RemoveListener(_fightCommand.ActionEvent);
+        PlayerAnimationEvents.SlashEvent.RemoveListener(_fightCommand.SetSwordColliderAsTrigger);
     }
 
     private void FixedUpdate()
@@ -86,33 +87,29 @@ public class PlayerController : MonoBehaviour
         //SetIsGroundedOldWay();
 
         _jumpCommand.Execute();
-        _moveCommand.Execute();
         _fightCommand.Execute();
+        _moveCommand.Execute();
         CarryObject();
     }
 
     private bool IsGroundedRaycast()
     {
         return
-            CheckIsGroundedRaycast(_playerSettings.GroundCheckFrontRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer, debug: true) ||
-            CheckIsGroundedRaycast(_playerSettings.GroundCheckBackRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer, debug: true) ||
-            CheckIsGroundedRaycast(_playerSettings.GroundCheckMidRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer, debug: true);
+            CheckIsGroundedRaycast(_playerSettings.GroundCheckFrontRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer) ||
+            CheckIsGroundedRaycast(_playerSettings.GroundCheckBackRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer) ||
+            CheckIsGroundedRaycast(_playerSettings.GroundCheckMidRaycast.position, _playerSettings.GroundCheckRadiusRaycast, _playerSettings.GroundLayer);
     }
 
-    private bool CheckIsGroundedRaycast(Vector3 groundcheckRaycastPosition, float lengthToCheck, LayerMask layersToCheck, bool debug = false)
+    private bool CheckIsGroundedRaycast(Vector3 groundcheckRaycastPosition, float lengthToCheck, LayerMask layersToCheck)
     {
         RaycastHit2D raycastHit = Physics2D.Raycast(groundcheckRaycastPosition, Vector2.down, lengthToCheck, layersToCheck);
         bool hasHit = raycastHit.collider != null;
 
-        if (debug)
+        if (_debug)
             Debug.DrawRay(groundcheckRaycastPosition, Vector2.down * lengthToCheck, hasHit ? Color.green : Color.red);
 
         if (hasHit)
-        {
-            // _playerSettings.IsGrounded = true;
-            // return _playerSettings.IsGrounded;
             return true;
-        }
 
         return false;
     }
@@ -126,7 +123,8 @@ public class PlayerController : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance, layer);
 
         // Force cast to Vector3 for draw
-        Debug.DrawRay(origin, (Vector3)(direction * distance), hit.collider != null ? Color.green : Color.red);
+        if (_debug)
+            Debug.DrawRay(origin, (Vector3)(direction * distance), hit.collider != null ? Color.green : Color.red);
 
         return hit.collider != null && !IsMovable(hit.collider.gameObject);
     }
