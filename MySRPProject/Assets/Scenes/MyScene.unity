@@ -898,7 +898,7 @@ PolygonCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 337802024}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Density: 1
   m_Material: {fileID: 0}
@@ -5496,7 +5496,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 9ddf42d1ac652a874b375a55307d5b37, type: 2}
     - target: {fileID: 815913280093349164, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -103.713165
+      value: -98.14486
       objectReference: {fileID: 0}
     - target: {fileID: 879080173199870271, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_Layer
@@ -5512,7 +5512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1387309605991429091, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 5.2823906
+      value: 5.282391
       objectReference: {fileID: 0}
     - target: {fileID: 1692066656734202124, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_SortingLayer
@@ -5552,7 +5552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2895641055395148145, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -122.32334
+      value: -147.55013
       objectReference: {fileID: 0}
     - target: {fileID: 3006664577047141882, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_SortingLayer
@@ -5596,15 +5596,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4224112681634529828, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -71.62616
+      value: -83.11054
       objectReference: {fileID: 0}
     - target: {fileID: 4899511101692622342, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 132.28638
+      value: 158.18724
       objectReference: {fileID: 0}
     - target: {fileID: 5318528283848197716, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -14.831806
+      value: 5.1060176
       objectReference: {fileID: 0}
     - target: {fileID: 5574867324994731486, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_SortingLayer
@@ -5644,7 +5644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6790863874883348983, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -151.3129
+      value: -64.791794
       objectReference: {fileID: 0}
     - target: {fileID: 6964424523675419243, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_SortingLayer
@@ -5692,11 +5692,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 9ddf42d1ac652a874b375a55307d5b37, type: 2}
     - target: {fileID: 7858995642002767307, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 77.6968
+      value: 92.10917
       objectReference: {fileID: 0}
     - target: {fileID: 7887203012222604697, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -7.377066
+      value: 0.3385489
       objectReference: {fileID: 0}
     - target: {fileID: 8451860285347379193, guid: 49e25d956c2861240803e52991138162, type: 3}
       propertyPath: m_SortingLayer
@@ -5922,6 +5922,7 @@ MonoBehaviour:
     <FightState>k__BackingField: 0
     <Sword>k__BackingField: {fileID: 337802029}
     <SwordForce>k__BackingField: 40
+  _debug: 0
 --- !u!114 &1232109216
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8597,7 +8598,8 @@ MonoBehaviour:
   landingSound1: {fileID: 8300000, guid: 407d06a5e0acce03b8c981d7484a654d, type: 3}
   landingSound2: {fileID: 8300000, guid: df192d88356883edb97af77647d5c660, type: 3}
   landingSound3: {fileID: 8300000, guid: d397d2a153e6d30069254ea930b370ef, type: 3}
-  lightSaberSound1: {fileID: 8300000, guid: 37a99f4e2399628f3b076b5ea14cd644, type: 3}
+  swordSwooshSound: {fileID: 8300000, guid: 789a2135ec5809ec689ab1d3dfa45fa0, type: 3}
+  swordHitSound: {fileID: 8300000, guid: 34fc2dfb3ab35f1f7b9b949da98f65e4, type: 3}
 --- !u!1 &2068290951
 GameObject:
   m_ObjectHideFlags: 0

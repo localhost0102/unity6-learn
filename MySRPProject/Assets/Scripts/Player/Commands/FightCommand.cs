@@ -26,7 +26,7 @@ namespace Player.Commands
         public void Execute()
         {
             if (_fightSettings.FightState == FightStates.None) return;
-
+            
             switch (_fightSettings.FightState)
             {
                 case FightStates.Slash:
@@ -46,13 +46,13 @@ namespace Player.Commands
         }
         
         // Called by PlayerController subscribed to Event for AnimationEvents on Slashing action
-        public void SetSwordColliderAsTrigger<T>(T parameter)
+        public void EnableSwordCollider<T>(T parameter)
         {
             if (parameter == null) return;
-            
+            Debug.Log(parameter);
             bool animationStarted = TTypeConvert.ConvertToBool(parameter);
             _attackStarted = animationStarted;
-            _swordCollider.isTrigger = !_attackStarted;
+            _swordCollider.enabled = _attackStarted;
             
             if (!animationStarted)
                 AnimationController.EndAttack();

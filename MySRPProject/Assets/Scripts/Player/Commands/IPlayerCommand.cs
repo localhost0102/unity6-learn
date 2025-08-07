@@ -16,7 +16,7 @@ namespace Player.Commands
 
     public interface IPlayerWithEventsCommand : IPlayerCommand
     {
-        public void SetSwordColliderAsTrigger<T>(T parameter);
+        public void EnableSwordCollider<T>(T parameter);
     }
 
     public interface IPlayerExtendedCommand

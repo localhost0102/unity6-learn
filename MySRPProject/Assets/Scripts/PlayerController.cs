@@ -68,13 +68,15 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         _controls.Gameplay.Enable();
-        PlayerAnimationEvents.SlashEvent.AddListener(_fightCommand.SetSwordColliderAsTrigger);
+        
+        // TODO: Ovo trenutno salje samo FightEnd, a meni treba i Start u PlayerAnimationEvent (moram prepoznati kada mac mase, a kada udari u EnableSwordCollider
+        PlayerAnimationEvents.SlashEvent.AddListener(_fightCommand.EnableSwordCollider);
     }
 
     private void OnDisable()
     {
         _controls.Gameplay.Disable();
-        PlayerAnimationEvents.SlashEvent.RemoveListener(_fightCommand.SetSwordColliderAsTrigger);
+        PlayerAnimationEvents.SlashEvent.RemoveListener(_fightCommand.EnableSwordCollider);
     }
 
     private void FixedUpdate()

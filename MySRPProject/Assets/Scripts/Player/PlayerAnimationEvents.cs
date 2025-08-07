@@ -1,5 +1,4 @@
 using Player;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -27,11 +26,12 @@ public class PlayerAnimationEvents : MonoBehaviour
             FootstepEvent?.Invoke("2");
         }
     }
-    
-    private void OnSlashAnimationStarted(int slashPosition)
-    {
-        bool hasStarted = slashPosition == 1;
-        SlashEvent?.Invoke(hasStarted);
-    }
 
+    // FightState : StateMachineBehaviour (OnStateExit metoda) skripta koja je dodana na FightState u Animator prozoru poziva ovaj event
+    // kada state zavrsi. Pouzdanije rjesenje nego Animation eventi. Omogucuje brze ponavljanje animacije (brzi napad u ovom slucaju).
+    // I ne blokira se kao sto eventi rade - ne uspiju se izvrsiti ponekad.
+    public void OnFightEnd()
+    {
+        SlashEvent?.Invoke(false);
+    }
 }
