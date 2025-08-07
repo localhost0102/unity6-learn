@@ -19,7 +19,8 @@ public class PlayerSoundController : MonoBehaviour
     [SerializeField] private AudioClip landingSound1;
     [SerializeField] private AudioClip landingSound2;
     [SerializeField] private AudioClip landingSound3;
-    [SerializeField] private AudioClip lightSaberSound1;
+    [SerializeField] private AudioClip swordSwooshSound;
+    [SerializeField] private AudioClip swordHitSound;
 
     void OnEnable()
     {
@@ -43,6 +44,17 @@ public class PlayerSoundController : MonoBehaviour
         musicSource.Play();
     }
 
+    // Triggered only when sword collider hits something
+    public void PlayAttackHitSound()
+    {
+        sfxSource.PlayOneShot(swordHitSound);
+    }
+    
+    private void PlayAttackSound()
+    {
+        sfxSource.PlayOneShot(swordSwooshSound);
+    }
+    
     private void PlayFootstepSound(string soundOrdinal)
     {
         if (soundOrdinal == "1")
@@ -79,8 +91,7 @@ public class PlayerSoundController : MonoBehaviour
         sfxSource.Play();
     }
 
-    private void PlayAttackSound()
-    {
-        sfxSource.PlayOneShot(lightSaberSound1);
-    }
+    
+    
+    
 }
