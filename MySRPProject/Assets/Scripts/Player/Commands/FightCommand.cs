@@ -34,7 +34,18 @@ namespace Player.Commands
                     break;
             }
         }
-
+        public void EnableSwordCollider<T>(T parameter)
+        {
+            if (parameter == null) return;
+            
+            bool animationStarted = TTypeConvert.ConvertToBool(parameter);
+            _attackStarted = animationStarted;
+            _swordCollider.enabled = _attackStarted;
+            
+            if (!animationStarted)
+                AnimationController.EndAttack();
+        }
+    
         private void ExecuteSlash()
         {
             _fightSettings.FightState = FightStates.None;
@@ -45,18 +56,6 @@ namespace Player.Commands
             AnimationController.StartAttack();
         }
         
-        // Called by PlayerController subscribed to Event for AnimationEvents on Slashing action
-        public void EnableSwordCollider<T>(T parameter)
-        {
-            if (parameter == null) return;
-            Debug.Log(parameter);
-            bool animationStarted = TTypeConvert.ConvertToBool(parameter);
-            _attackStarted = animationStarted;
-            _swordCollider.enabled = _attackStarted;
-            
-            if (!animationStarted)
-                AnimationController.EndAttack();
-        }
         
         private bool CanAttack()
         {

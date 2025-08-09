@@ -34,4 +34,9 @@ public class PlayerAnimationEvents : MonoBehaviour
     {
         SlashEvent?.Invoke(false);
     }
+
+    public void OnFightStart()
+    {
+        SlashEvent?.Invoke(true);
+    }
 }

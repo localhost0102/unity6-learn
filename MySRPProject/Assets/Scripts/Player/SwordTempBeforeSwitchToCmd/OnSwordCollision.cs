@@ -11,12 +11,15 @@ public class OnSwordCollision : MonoBehaviour
     public void SetPlayerSettings(PlayerFightSettings playerFightSettings)
     {
         _playerFightSettings = playerFightSettings;
+        
+        if (_playerSoundController == null)
+            Debug.Log($"{nameof(_playerFightSettings)} is null in OnSwordCollision script. Please attach it from the Player");
     }
     
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(collision.gameObject.name);
-        
+        if (collision == null) return;
+   
         var rb = collision.gameObject.GetComponent<Rigidbody2D>();
         _playerSoundController.PlayAttackHitSound();
         rb.AddForce(Vector3.down * _playerFightSettings.SwordForce,  ForceMode2D.Impulse);

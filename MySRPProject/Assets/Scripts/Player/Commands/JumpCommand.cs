@@ -25,7 +25,9 @@ namespace Player.Commands
                 AnimationController.SetJumping(false);
             }
             
-            if (_playerSettings.HasJumped)
+            InvokeHasLandedEvent();
+            
+            if (_playerSettings.HasJumped && CanJump())
             {
                 JumpEvent?.Invoke();
                 AnimationController.SetJumping(true);
@@ -35,8 +37,14 @@ namespace Player.Commands
                 _playerSettings.HasJumped = false;
             }
 
-            InvokeHasLandedEvent();
             SetPreviousVelocity(_playerSettings.Rb.linearVelocity.y);
+        }
+
+        private bool CanJump()
+        {
+            bool canJump = _playerSettings.IsGrounded && !_playerSettings.IsCarryingObject;
+            if (_playerSettings.HasJumped && !canJump) _playerSettings.HasJumped = false;            
+            return canJump;
         }
 
         private void InvokeHasLandedEvent()

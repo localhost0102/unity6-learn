@@ -68,8 +68,6 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         _controls.Gameplay.Enable();
-        
-        // TODO: Ovo trenutno salje samo FightEnd, a meni treba i Start u PlayerAnimationEvent (moram prepoznati kada mac mase, a kada udari u EnableSwordCollider
         PlayerAnimationEvents.SlashEvent.AddListener(_fightCommand.EnableSwordCollider);
     }
 

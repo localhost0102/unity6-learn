@@ -37,6 +37,7 @@ public class PlayerSettings
     //public float LastGroundedDirection { get; set; }
     public Vector2 MoveInput { get; set; }
     public bool IsBlockedAhead { get; set; }
+    public bool IsCarryingObject { get; set; }
 
     public void ValidateNullable()
     {
