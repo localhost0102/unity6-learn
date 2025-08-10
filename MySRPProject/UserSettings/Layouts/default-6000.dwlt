@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 914
   m_ShowMode: 4
-  m_Title: Game
+  m_Title: Console
   m_RootView: {fileID: 8}
   m_MinSize: {x: 875, y: 382}
   m_MaxSize: {x: 10000, y: 10000}
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 157
+  controlID: 110
   draggingID: 0
 --- !u!114 &5
 MonoBehaviour:
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 23
+  controlID: 108
   draggingID: 0
 --- !u!114 &6
 MonoBehaviour:
@@ -277,7 +277,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 24
+  controlID: 109
   draggingID: 0
 --- !u!114 &12
 MonoBehaviour:
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 50}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 25
+  controlID: 71
   draggingID: 0
 --- !u!114 &13
 MonoBehaviour:
@@ -435,7 +435,7 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 76428
+  m_LastSelectedObjectID: 48016
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1006,9 +1006,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: 6.954354, y: -2.1293004, z: -9.921375}
+    m_Target: {x: 2.4131083, y: -0.7699839, z: -9.958772}
     speed: 2
-    m_Value: {x: 6.954354, y: -2.1293004, z: -9.921375}
+    m_Value: {x: 2.4131083, y: -0.7699839, z: -9.958772}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -1058,9 +1058,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 4.262334
+    m_Target: 8.001782
     speed: 2
-    m_Value: 4.262334
+    m_Value: 8.001782
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -1117,7 +1117,7 @@ MonoBehaviour:
     serializedVersion: 2
     x: 330
     y: 639
-    width: 768
+    width: 656
     height: 323
   m_SerializedDataModeController:
     m_DataMode: 0
@@ -1141,7 +1141,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts/Player/AnimationStateBehaviour
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1151,16 +1151,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Scripts/Player/AnimationStateBehaviour
+  - Assets
   m_LastFoldersGridSize: 16
   m_LastProjectPath: /home/leo/git/unity6-learn/MySRPProject
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: d0040100
-    m_LastClickedID: 66768
-    m_ExpandedIDs: 0000000096c00000
+    scrollPos: {x: 0, y: 56}
+    m_SelectedIDs: 96c00000
+    m_LastClickedID: 49302
+    m_ExpandedIDs: 00000000a0c00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1189,7 +1189,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000096c00000
+    m_ExpandedIDs: 00000000a0c00000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1215,8 +1215,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: fad70000
-    m_LastClickedInstanceID: 55290
+    m_SelectedInstanceIDs: a4020000
+    m_LastClickedInstanceID: 676
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c62300005ad2000036b40000c4cc0000d2cd0000000000001ad000001ed0000062be000048c40000d6bd00002abe0000
     m_RenameOverlay:
@@ -1337,7 +1337,7 @@ MonoBehaviour:
       scrollPos: {x: 0, y: 0}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 920cffff960cffffc80cffffe20cffffba14ffff482a0100d22a0100022b0100ba2b0100442c01008a2c0100902c0100
+      m_ExpandedIDs: b6faffffbafaffffecfaffff06fbffff60bb00001cbc000036bc0000d4bc00005ebd0000a4bd0000aabd0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 

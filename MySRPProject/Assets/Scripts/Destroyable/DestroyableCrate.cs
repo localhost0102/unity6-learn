@@ -10,7 +10,6 @@ public class DestroyableCrate : MonoBehaviour, IDestroyable
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log(other.gameObject.name);
         if (other.gameObject.CompareTag("WeaponTag"))
         {
             _numberOfHits++;

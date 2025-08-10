@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Helpers;
 using Player.Commands;
 using Player.Enums;
 using UnityEngine;
@@ -13,13 +14,7 @@ public class CarryCommand : IPlayerCarryCommand
     private readonly PlayerCarrySettings _playerCarrySettings;
 
     private GameObject _carriedObject;
-
-    // Tracks only the objects whose layer we changed on pickup
-    private readonly Dictionary<GameObject, int> _changedLayers = new Dictionary<GameObject, int>(32);
-
-    // Cache layer indices (optional but cheap)
-    private readonly int _groundLayer = LayerMask.NameToLayer("Ground");
-    private readonly int _carriedLayer = LayerMask.NameToLayer("Carried");
+    private Transform _originalParent;
 
     public CarryCommand(PlayerSettings playerSettings, PlayerCarrySettings playerCarrySettings)
     {
@@ -47,12 +42,14 @@ public class CarryCommand : IPlayerCarryCommand
 
     public GameObject FindNearbyCarriable()
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(_playerCarrySettings.CarryPoint.position, _playerCarrySettings.CarryRadius);
+        Collider2D[] hits =
+            Physics2D.OverlapCircleAll(_playerCarrySettings.CarryPoint.position, _playerCarrySettings.CarryRadius);
         foreach (var hit in hits)
         {
             if (hit.TryGetComponent<CarriableObject>(out var _))
                 return hit.gameObject;
         }
+
         return null;
     }
 
@@ -61,36 +58,43 @@ public class CarryCommand : IPlayerCarryCommand
         if (_carriedObject || !objToPickup || !_playerSettings.CarryPoint) return;
 
         _carriedObject = objToPickup;
+        _originalParent = objToPickup.transform.parent;
+        
+        // Attach to carry point while preserving world position, rotation, and scale
+        _carriedObject.transform.SetParent(_playerSettings.CarryPoint, worldPositionStays: true);
 
-        // Parent first, then freeze physics
-        _carriedObject.transform.SetParent(_playerSettings.CarryPoint);
-        _carriedObject.transform.localPosition = Vector3.zero;
-
-        _playerCarrySettings.CarryState = CarryStates.Carrying;
-
+        // Disable physics while carrying
         var rb = _carriedObject.GetComponent<Rigidbody2D>();
         if (rb) rb.simulated = false;
+        
+        _playerCarrySettings.CarryState = CarryStates.Carrying;
         _playerSettings.IsCarryingObject = true;
     }
 
     private void DropObject()
     {
         if (_carriedObject == null) return;
+
         _playerSettings.IsCarryingObject = false;
-        // Unparent
-        _carriedObject.transform.SetParent(null);
 
-        // Drop slightly in front of the player
-        //float dropOffset = 0.5f; // tweak this distance to your liking
-        // Vector3 dropPos = _carriedObject.transform.position + 
-        //                   (Vector3.right * _playerSettings.FacingDirection * dropOffset);
-        //_carriedObject.transform.position = dropPos;
+        // 1) Decide where in WORLD space you want to drop it.
+        Vector3 dropWorldPos = _carriedObject.transform.position;
 
+        // Optional: push a bit in front of player (world space)
+        dropWorldPos += (Vector3)_playerSettings.CarryPoint.transform.right * _playerSettings.FacingDirection *
+                       _playerCarrySettings.DropOffset;
+
+        // 2) Reparent to the original parent while KEEPING world TRS (prevents any X/Y/Z pop)
+        _carriedObject.transform.SetParent(_originalParent, worldPositionStays: true);
+
+        // 3) Re-apply the world position you want (safe; still world space)
+        _carriedObject.transform.position = dropWorldPos;
+
+        // 4) Re-enable physics and give it some inherited velocity
         var rb = _carriedObject.GetComponent<Rigidbody2D>();
         if (rb != null)
         {
             rb.simulated = true;
-            rb.linearVelocity = Vector2.zero;
             rb.linearVelocity = new Vector2(
                 _playerSettings.Rb.linearVelocity.x * 1.3f,
                 _playerSettings.Rb.linearVelocity.y * 1.3f
